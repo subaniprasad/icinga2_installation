@@ -1,0 +1,37 @@
+---
+- name: installing php and libraries
+  yum:
+      name: "{{ item }}"
+      state: present
+  with_items:
+        - php 
+        - php-gd 
+        - php-intl 
+        - php-ldap 
+        - php-ZendFramework 
+        - php-ZendFramework-Db-Adapter-Pdo-Mysql
+        - php-pgsql
+
+- name: Changing the time zone in php.ini file
+  lineinfile:
+          dest: "/etc/php.ini"
+          state: "present"
+          regexp: ';date.timezone ='
+          line: 'date.timezone = Asia/Kolkata'
+          backup: yes
+
+- name: Disabling SELinux
+  selinux:
+    state: disabled
+
+- name: Creating Icinga repository files
+  shell: "{{ item }}"
+  with_items:
+     -  "rpm --import http://packages.icinga.org/icinga.key"
+     -  "rpm -i https://packages.icinga.org/epel/7/release/noarch/icinga-rpm-release-7-1.el7.centos.noarch.rpm"
+  ignore_errors: yes
+
+- name: Installing Nagios Plugins
+  yum:
+    name: nagios-plugins-all
+    state: present

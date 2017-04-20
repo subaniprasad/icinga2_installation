@@ -1,0 +1,3 @@
+---
+#python -c 'import crypt; print crypt.crypt("welcome", "$1$SomeSalt$")'
+mysql_root_password: mysqladminpassword

@@ -1,0 +1,31 @@
+---
+- name: Installing apache 
+  yum: 
+    name: httpd
+    state: latest
+
+- name: Disable the pre-set Apache Welcome page
+  shell: sed -i 's/^/#&/g' /etc/httpd/conf.d/welcome.conf
+
+- name: Forbid Apache from exposing files and directories within the web root directory.
+  shell: sed -i "s/Options Indexes FollowSymLinks/Options FollowSymLinks/" /etc/httpd/conf/httpd.conf
+
+- name: Enable service httpd
+  service:
+    name: httpd
+    enabled: yes
+
+- name: start service httpd
+  service: 
+     name: httpd
+     state: started
+
+- name: Allowing http from Firewalld
+  firewalld:
+     service: "{{ item }}"
+     permanent: true
+     state: enabled
+     immediate: yes
+  with_items:
+       - "http"
+       - "https"

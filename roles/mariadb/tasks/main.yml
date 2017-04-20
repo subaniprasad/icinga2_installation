@@ -1,0 +1,10 @@
+---
+- include: mariadb-install.yml
+
+- name: Start and enable service
+  service: 
+     name: mariadb
+     state: started
+     enabled: yes
+
+- include: mysql_secure_installation.yml

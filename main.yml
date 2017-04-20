@@ -1,0 +1,10 @@
+---
+- hosts: icinga2-server
+  user: root
+  gather_facts: yes
+  roles:
+ # - httpd
+ # - mariadb
+   - epel-repo
+   - prereqs
+   - icinga2
