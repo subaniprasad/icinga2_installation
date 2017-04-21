@@ -1,2 +1,2 @@
 [icinga2-server]
-192.168.159.130
+192.168.56.101 ansible_ssh_user=root ansible_ssh_password=welcome

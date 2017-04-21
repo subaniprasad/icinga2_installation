@@ -80,6 +80,9 @@
             group=icinga
             mode=0640
 
+- name: Enabling Icinga2 feature command
+  shell: icinga2 feature enable command
+
 - name: Restart HTTPD and Icinga2 to Apply the Configuration
   service: name={{ item }}
            state=restarted
